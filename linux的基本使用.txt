@@ -1,0 +1,518 @@
+1. shell操作相关的快捷键
+		1>. tab
+		2>. 遍历历史记录, 显示历史记录: history
+				①. ctrl+p
+				②. ctrl+n
+		3>. 光标移动
+				①. ctrl+b
+				②. ctrl+f
+				③. ctrl+a
+				④. ctrl+e
+		4>. 字符删除
+				①. ctrl+d
+				②. ctrl+h
+				③. ctrl+u
+				④. ctrl+k
+2. linux文件系统目录结构
+		1>. 根目录如何表示?
+		2>. 根目录下常用目录
+				①. /dev
+				②. /etc
+				③. /bin
+				④. /lib
+				⑤. /mnt
+				⑥. /media
+				⑦. /usr
+				⑧. /home
+3. 相对路径和绝对路径  -- /home/itcast/programer/kevin
+		当前用户所在的目录: /home/itcast, 使用两种方式表示kevin目录
+		1>. 绝对路径
+			== 从根据目录开始表示的目录
+			   cd /home/itcast/programer/kevin
+		2>. 相对路径
+		  == 从当前的目录开始表示
+		  	 cd programer/kevin
+		  	 cd ./programer/kevin
+		  	 	当前目录: .
+		  	 	当前的目录的上一级目录: ..
+4. 文件和目录相关操作
+		1>. tree -- 树形式查看目录
+				命令 -- 相当于软件, 需要额外安装
+					使用:
+						tree  -- 列出当前目录下的内容
+						tree 目录名 -- ...指定目录...
+		2>. ls -- 
+					ls
+					ls 文件名/目录名
+					参数: 
+						-a: 显示隐藏文件
+								linux隐藏文件表示: 名字前加.
+						-R: 递归显示目录中的内容
+						-l: 列出文件的详细信息
+					
+		3>. cd -- 目录切换
+					如何进入到家目录: 
+						cd /home/itheima
+						cd ~
+						cd
+					在临近的两个目录间切换:
+						cd -
+		4>. pwd -- 显示当前工作目录
+		5>. mkdir -- 创建目录
+					mkdir 目录名 -- 单个目录
+					mkdir /dir1/dir2 -p  == 创建多个目录(嵌套)
+		6>. touch -- 创建或更新文件
+					touch 文件名
+						文件不存在 -- 创建文件
+						文件存在 -- 更新文件的时间(文件的修改日期)
+		7>. rmdir -- 删除空目录
+					使用频率不高
+		8>. rm -- 删除文件或目录
+					删除之后无法恢复
+					rm 目录 -r (空和非空)
+					rm 文件名 
+					参数: 
+						-i: 删除的时候有提示
+						-f: 强制删除
+						
+		9>. cp -- 拷贝文件或目录
+		10>. mv -- 移动或修改文件[目录]名
+		11>. 查看文件内容(了解知识点)
+				①. cat -- 查看文件内容比较少的文件
+						cat 文件名
+							文件内容输出到终端
+				②. more -- 可以显示文件的所有内容, 只能向下浏览
+						more 文件名
+							回车 -- 向下显示一行
+							空格 -- 翻页
+							退出: q
+				③. less -- 可以上下浏览
+						less 文件名
+							回车 -- 向下显示一行 ctrl+n
+							空格 -- 翻页(向下) -- pagedown
+							向上滚动一行 -- ctrl+p
+							向上翻页: pageup
+							退出: q
+				④. head
+						head 文件名
+							默认显示文件的前10行
+							指定显示的行数: head -行数 文件名
+				⑤. tail
+						head 文件名
+							默认显示文件的后10行
+							指定显示的行数: tail -行数 文件名
+		12>. 软硬链接 -- ln
+				①. 软链接(符号链接) -- 快捷方式(windows)
+						ln -s 文件名(要给他创建快捷方式) 创建出来的链接的名字
+										文件名需要是一个绝对路径
+				②. 硬链接
+						ln 文件名(给哪一个文件创建硬链接) 硬链接的名字
+						
+5. 用户权限, 用户和用户组
+		1>. chmod -- 修改文件或目录权限 *****
+				①. 文字设定法 
+						chmod who [+|-|=] mode 文件名
+							who: u -- user 文件所有者, g--group, 同组用户, o-other其他人, a --all, 所有
+							+: 添加权限
+							-: 移除权限
+							=: 直接设置, 覆盖原来的权限(可以省略)
+							mode: 权限
+								r: 读read
+								w: 写write
+								x: 执行
+								-: 没有权限
+							题目: rwxrwxrwx -- file, 文件所有者和其他人 减去读写权限		
+				②. 数字设定法 
+						chmod [+|-|=]mode 文件名 √
+							mode: -- 使用八进制的方式表示权限 0777
+								r -- 4
+								w -- 2
+								x -- 1
+								- -- 0
+							---xrwx--x 1 itheima itheima 0 10月 18 15:51 file
+							将文件所有者和同组用户的权限设置为-wx, 其他人执行权限
+							chmod 0331 file
+
+		2>. chown -- 修改文件所有者或所属组, 需要使用root权限
+				修改文件所有者: chown 文件所有者 文件名
+				......所有者和所属组: chown 文件所有者:文件所属组 文件名
+		3>. chgrp -- 修改文件所属组 -- 需要root权限 
+				修改文件所属组: chgrp 所属组 文件名
+6. 文件查找和检索 *****
+		1>. find -- 根据文件属性查找
+				1. 根据文件名
+						find 查找的路径 -name "文件名"
+				2. 根据文件的大小
+						find 查找的路径 -size 大小
+								大于100k: find ~ -szie +100k(k必须小写)
+						查找一下大于100k小于10M的文件
+							find ~ -size +100k -size -10M(M必须大写)
+				3. 根据文件的类型
+							find 查找的路径 -type 
+								7中文件类型: 
+										普通文件: -(普通文件使用f表示)
+										目录: d
+										链接文件:l
+										套接字:s
+										管道:p
+										字符设备:c
+										块设备:b
+		2>. grep -- 根据文件内容查找
+				grep "查找的字符串" 查找的路径 -r(路径中有目录)
+				
+				总结: find 和 grep 的区别
+					find: 查找的路径在前边, 查找的内容在后边
+					grep: 超照的路径在后边, 查找的内容在前边
+				
+7. 压缩包管理 *****
+		linux下常见的压缩格式: 
+				.gz   --  gzip
+				.bz2  --  bzip2
+		1>. tar -- 只有打包功能, 并不能压缩
+					参数: 
+						z -- 使用gzip的方式压缩和解压缩 -- .gz
+						j -- 使用bzip2的方式......     --  .bz2
+						
+						c -- 创建压缩文件
+						x -- 释放压缩文件
+						
+						v -- 输出压缩和解压缩信息
+						f -- 指定压缩包的名字
+						
+					压缩: tar 参数  生成的压缩包的名字  原材料(要压缩的文件)
+					解压缩: tar 参数 压缩包的名字 -- 解压到当前目录
+									tar 参数 压缩包的名字 -C 解压目录			
+		2>. rar -- window常用的压缩格式
+				rar -- 需要安装这个软件才能使用
+				压缩: rar a(压缩) -r(如果压缩的是目录) 生成的压缩包的名字  原材料
+				解压缩: rar x 压缩包名 -- 解压到当前目录
+								rar x 压缩包名 释放的目录
+		3>. zip -- 7z
+				压缩: zip -r(压缩的是目录) 生成的压缩包的名字 原材料
+				解压缩: unzip 压缩包的名字 -- 解压到当前目录
+								unzip 压缩包的名字 -d 解压目录 -- 解压到指定目录
+								
+				总结: 规律:
+					压缩: tar/rar/zip 参数 生成的压缩包的名字 原材料
+					解压缩: tar/rar/unzip 参数(tar/rar) 压缩包名 [参数(-C(tar)/-d(uzip))  解压缩目录]
+8. U盘的挂载和卸载 -- 需要使用管理员权限执行
+		1>. 挂载 -- mount
+		2>. 卸载 -- umount
+9. 软件的安装和卸载
+		1>. 在线安装 -- apt-get
+		2>. 软件包安装(.deb) -- dpkg
+		
+		
+		
+		
+		
+		
+10. 环境变量:
+	1>. 用户级别: 用户家目录 ~  .bashrc
+	2>. 系统级别: /etc/profile
+
+11. U盘的挂载和卸载 -- 需要使用管理员权限执行
+		1>. 挂载 -- mount
+				sudo mount 挂载的设备名 挂载的目录
+					问题: 如何获取设备名
+						sudo fdisk -l
+					挂载的时候指定编码格式:
+						sudo mount 设备名 挂载目录 -o iocharset=utf8
+					U盘只能挂载到/mnt目录吗?
+						可以, 如果目录中有内容, 会临时覆盖, 当卸载之后, 数据就恢复了
+						挂载到其他目录的时候建议使用空目录
+		2>. 卸载 -- umount
+					sudo umount 挂载目录 
+					注意事项: 不能再挂载路径里边卸载
+12. 软件的安装和卸载
+		1>. 在线安装 -- apt-get
+				1. 安装: sudo apt-get install 软件名(tree/vim)
+					 卸载: sudo apt-get remove  软件名
+					 更新安装列表: sudo apt-get update
+					 删除缓存: /var/cache/apt/archives
+					 			sudo apt-get clean
+		2>. 软件包安装(.deb) -- dpkg
+					安装: dpkg -i xx.deb
+					卸载: dpkg -r 软件名
+
+13. vim的基本使用					
+	1. vim的三种工作模式
+	2. vim命令模式下的相关操作
+		保存退出: ZZ
+		1>. 光标的移动
+					上下左右:
+					光标移动到行首: 0
+					........尾: $
+					......文件头部: gg
+					......文件尾部: G
+					行跳转: 行号G
+		2>. 删除命令 -- 删除操作实际上是一个剪切操作
+					删除字符: 删除光标后边的: x
+										.....前边:     X
+					删除一个字: 单词: dw
+							删除整个单词, 需要将光标房子单词的前边, 否则只能删除一部分
+					删除光标前的串: d0
+					......后边的..: d$(D)
+					删除整行: dd 
+					删除多行: ndd (n==行数)
+		3>. 撤销和反撤销
+					撤销: u
+					反撤销: ctrl+r
+		4>. 复制和粘贴
+					粘贴: p -- 粘贴光标所在行的下一行
+								P -- xxxxxx 上一行
+					复制: yy
+								复制多行: nyy (n=行号)
+		5>. 可视模式
+					v -- 切换到课时模式
+					选择: hklj
+					删除选中内容: d
+					复制.....:    y
+		6>. 替换操作
+				r: 只能替换一个字符, 光标盖住的字符
+				R: 从光标盖住的字符开始从后替换
+		8>. 查找命令
+				/  - 从当前位置向下, n切换
+				? - xxxx上, n切换
+				
+				在要查的单词身上按 # , 切换n
+		9>. 查看man文档
+					章节号 K(shift+k)
+3. 命令模式切换到文本编辑模式
+		a -- 从光标的后边插入, A 行尾
+		i -- ....前边插入, I 行首
+		o -- 在当前行的下边创建新行, O当前行的上边创建新行
+		s -- 删除一个字符, 光标覆盖的字符, 光标后边的字符, S, 删除行
+4. vim末行模式下的相关操作
+		从命令 --> 末行: 输入一个:
+				在末行模式下执行完一条命令, 自动回到命令模式
+		1>. 保存退出
+				1. 保存: w
+				2. 退出: q, 退出时做了修改, 没保存, 会给提示
+				3. 退出不保存: q!
+				4. 保存退出: wq == x
+		2>. 替换
+					替换光标所在行:
+						:s/tom/mike/g -- g将当前行的所有tom替换为mike
+					替换一个范围内的行:(10-20行)
+						:10,20s/tom/mike/g
+					替换所有行:
+						:%s/tom/mike/g
+		3>. 分屏操作
+				水平分屏: :sp  [文件名]
+				垂直分屏: :vsp [文件名]
+				
+				打开的时候文件分屏显示:
+					水平: vi/vim -on (n代表屏幕的个数) file1 file2
+					垂直: vi/vim -On (n代表屏幕的个数) file1 file2
+				在末行模式下执行命令:
+					切换到末行模式
+						:!shell命令
+
+14:	gcc的使用						
+	1. gcc的工作流程 -- 4步
+	2. gcc常用参数
+		sudo apt-get install gcc g++
+		1>. -v/--version
+		2>. -I: 编译时候指定头文件
+		3>. -c: 生成.o文件
+		4>. -o: 指定生成的文件的名字
+		5>. -g: gdb调试需要加的参数
+		6>. -D: 编译时候指定宏
+		7>. -Wall: 添加警告信息
+		8>. -On: 优化的参数: n == 0, 1, 2, 3
+					int a = 10;
+					int b = a;
+					int c  = b;
+					int d = c;
+					printf("c=%d\n", d);
+					
+					int d = 10;
+					printf("c=%d\n", d);
+					
+15. gdb调试命令
+		1>. 启动gdb
+					gdb 可执行程序的名字
+		2>. 查看代码
+				l -- 查看当前文件 -- 默认main函数
+				2. 查看其它文件: l 文件名:行号, 显示指定行号的上下文
+								l 函数名 -- 当前文件
+								l 文件名:函数名 -- 指定文件
+				3. 查看默认显示的行数: show listsize
+				4. 设置: set listsize 行数
+		3>. 断点操作
+					1. 当前文件设置断点: b(break) 行号
+					2. 指定文件: b 文件名:行号
+							b 函数名 -- 当前文件的这个函数位置打断点
+							b filename:funcName -- 指定文件的指定函数
+					3. info(i) b(break)
+					4. 删除断点: 
+							d 删除所有断点
+							d m-n  删除范围  (m, n断点的编号)
+							d m n k  删除指定断点
+					5. 使断点无效: disable(dis) 断点编号
+					6. 是断点再次生效: enable(ena) 断点编号
+					7. 设置条件断点: b 行号 if 变量==value					 
+		4>. 调试相关命令
+					1. run(r) -- 执行gdb在断点处停止
+					2. start  -- ....., 只执行一行就停止了
+					3. c(continue)继续运行, 停在下一个断点的位置
+					4. 单步调试: 
+							n(next) -- 往下执行一行代码, 不会进入到函数内部
+							s(step) -- 往下执行一行代码, 会进入到函数内部
+									从函数内部出来: finish
+					5. 打印变量的值: 
+							p 变量名
+							ptype 变量名 -- 打印变量的类型
+							自动追踪变量的值:
+								display 变量名
+							取消自动追踪:
+								undisplay 编号
+									info display -- 获取编号
+					6. 设置变量的值: set var 变量名=value
+					7. 退出gdb : quit(q)
+					
+		5>. 查看变量和类型
+		6>. 退出gdb
+					
+16. 静态库的制作和使用*.lib
+		命名规则: libxxx.a
+		
+		库是什么? 源代码 -- 源文件(.c .cpp)
+		库制作出来了, 如何给用户使用?
+			1. 制作出来的库
+			2. 头文件
+		制作步骤: 
+			1. 生成.o文件
+						gcc -c *.c
+			2. 将.o文件打包为.a文件 -- 使用ar工具
+						ar rcs 库的名字(libCalc.a) *.o
+		使用静态库:
+			1. 提供一个测试文件main.c  
+			2. 使用库和头文件+main.c生成可执行程序: 
+					gcc main.c -Iinclude -L./lib -lCalc -o aabb
+						-L: 指定库的路径
+						-l: 指定库的名字(掐头去尾 ) libabc.a  ->   abc
+		
+17. 动态库的制作和使用
+		命名规则: libxxx.so
+		制作步骤: 
+			1. 生成.o文件 -> .c .cpp
+						gcc -fpic(-fPIC) -c *.c
+			2. 将.o文件打包为.a文件 -- 使用gcc 需要加参数 -shared
+						gcc -shared -o libxxx.so *.o
+			使用库和头文件+main.c生成可执行程序: 
+					gcc main.c -Iinclude -L./lib -lCalc -o aabb
+						-L: 指定库的路径
+						-l: 指定库的名字(掐头去尾 ) libabc.so  ->   abc
+							
+			解决动态库找不到的问题:
+				1. export LD_LIBRARY_PATH=库的目录:$LD_LIBRARY_PATH -- 临时的设置
+				2. 永久生效: 把上面的代码写入 ~/.bashrc   /etc/profile
+				3. 更新 /etc/ld.so.cache文件列表
+					1. 打开/etc/ld.so.conf -- 在里边写入动态库的绝对路径
+					2. 执行一个命令: sudo ldconfig -v  -- 更新/etc/ld.so.cache文件列表
+
+18. Makefile
+		1>. makefile的命名
+				1. makefile
+				2. Makefile
+		2>. makefile中的规则
+					三部分: 
+					目标(app):依赖(main.c a.c b.c)
+						命令(gcc main.c a.c b.c -o app)
+					gcc main.c a.c b.c -o app
+				
+				执行 make 命令, 就会按照makefile中编写的规则编译整个项目
+				在makefile文件中可以有一个或多个规则
+				
+			第一版本:
+				1 app:main.c sub.c mul.c add.c
+  			2     gcc main.c sub.c mul.c add.c -o app
+  			缺点: 修改一个程序, 重新make其他文件也会被重新编译
+  			
+  			改进:
+  		第二个版本:
+  			makefile工作时候的原理:
+  				1. 如果规则中的依赖不存在, 向下查找下边的规则, 使用找到的规则生成不存在的依赖.
+  				2. 通过时间判断是否更新:
+  						第一次: add.c -> add.o 
+  						第二次: 修改add.c 如果目标的时间比依赖的时间早, 需要更新
+  							
+  				直接make生成的是一个条规则中的目标(终极目标)
+  				生成其他规则中的目标:
+  					make 其他规则中的目标的名字
+  				第二个版本程序:
+  				  1 app:main.o sub.o mul.o add.o
+					  2     gcc main.o sub.o mul.o add.o -o app
+					  3 
+					  4 
+					  5 # 编写规则， 来生成依赖中不存在的文件
+					  6 main.o:main.c
+					  7     gcc -c main.c
+					  8 
+					  9 sub.o:sub.c
+					 10     gcc -c sub.c
+					 11 
+					 12 mul.o:mul.c
+					 13     gcc -c mul.c
+					 14 
+					 15 add.o:add.c
+					 16     gcc -c add.c
+					 17 
+					 18 hello:
+					 19     echo "hello makefile"
+				缺点: 代码冗余
+					
+			第三版本:
+				变量: 自动变量: 自定变量只能在规则的命令中使用
+						$<: 依赖中的第一个 
+						$^: 所有的依赖
+						$@: 规则中的目标
+					%.o:%.c
+					main.o:main.c
+						gcc -c main.c
+						gcc -c main.c -o main.o
+					大写: makefile中自带的变量:
+						CC == cc == gcc
+						CPPFLAGS = -I./ 
+					
+					代码:
+						1 # 自定义变量
+					  2 obj = main.o sub.o mul.o add.o
+					  3 app:$(obj)
+					  4     gcc $(obj) -o app
+					  5 # 编写规则， 来生成依赖中不存在的文件
+					  6 # 模式规则
+					  7 %.o:%.c
+					  8     gcc -c $< -o $@
+					缺点: .o还是需要手动指定, 适应能力不行
+				
+				版本4:
+					使用函数: --  在makefile里边, 所有的函数都是有返回值的
+						1. wildcard -- 搜索指定目录下,指定类型的文件
+						2. patsubst -- 匹配替换函数
+					代码:
+					  2 # 使用makefile中的函数 
+					  3 src = $(wildcard ./*.c)
+					  4 obj = $(patsubst %.c, %.o, $(src))
+					  5 app:$(obj)
+					  6     gcc $(obj) -o app
+					  7 # 编写规则， 来生成依赖中不存在的文件
+					  8 # 模式规则
+					  9 %.o:%.c
+					 10     gcc -c $< -o $@
+					缺点: 没有清除项目的功能
+				
+				版本5:
+					声明伪目标: 不对文件做是否更新的判断
+						.PHONY:目标名
+
+
+
+				
+		3>. makefile中的变量
+		4>. makefile中的函数
+		5>. 伪目标的声明
+
+					
